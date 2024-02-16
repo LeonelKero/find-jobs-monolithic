@@ -3,23 +3,26 @@ package com.wbt.findjobs.job;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/jobs")
-public record JobController() {
-    private static final List<Job> jobs = new ArrayList<Job>();
+public record JobController(JobService jobService) {
 
     @GetMapping
     public List<Job> findAll() {
-        return jobs;
+        return jobService.findAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String create(final @RequestBody Job job) {
-        jobs.add(job);
+        jobService.create(job);
         return "Created Successfully!";
+    }
+
+    @GetMapping(path = {"/{id}"})
+    public Job get(final @PathVariable(name = "id") Long id) {
+        return this.jobService.findById(id);
     }
 }
