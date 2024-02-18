@@ -1,9 +1,7 @@
 package com.wbt.findjobs.job;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.wbt.findjobs.company.Company;
+import jakarta.persistence.*;
 
 @Entity
 public class Job {
@@ -15,6 +13,9 @@ public class Job {
     private Double minSalary;
     private Double maxSalary;
     private String location;
+
+    @ManyToOne
+    private Company company;
 
     public Job() {
     }
