@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -25,5 +26,17 @@ public class JobServiceImpl implements JobService {
     public Job findById(final Long jobId) {
         final var job = jobs.stream().filter(j -> j.getId().equals(jobId)).findFirst();
         return job.orElse(null);
+    }
+
+    @Override
+    public Boolean delete(final Long jobId) {
+        final var jobIterator = jobs.iterator();
+        while (jobIterator.hasNext()) {
+            if (jobIterator.next().getId().equals(jobId)) {
+                jobIterator.remove();
+                return true;
+            }
+        }
+        return false;
     }
 }
