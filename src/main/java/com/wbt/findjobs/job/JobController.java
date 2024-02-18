@@ -1,6 +1,7 @@
 package com.wbt.findjobs.job;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,19 +11,18 @@ import java.util.List;
 public record JobController(JobService jobService) {
 
     @GetMapping
-    public List<Job> findAll() {
-        return jobService.findAll();
+    public ResponseEntity<List<Job>> findAll() {
+        return new ResponseEntity<>(jobService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public String create(final @RequestBody Job job) {
+    public ResponseEntity<String> create(final @RequestBody Job job) {
         jobService.create(job);
-        return "Created Successfully!";
+        return new ResponseEntity<>("Created Successfully!", HttpStatus.CREATED);
     }
 
     @GetMapping(path = {"/{id}"})
-    public Job get(final @PathVariable(name = "id") Long id) {
-        return this.jobService.findById(id);
+    public ResponseEntity<Job> get(final @PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(this.jobService.findById(id));
     }
 }
