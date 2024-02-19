@@ -35,7 +35,7 @@ public record JobController(JobService jobService) {
         return new ResponseEntity<>("Resource with iid %s is missing".formatted(id), HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(path = {"/{id}"})
+    @PutMapping(path = {"/{id}"})
     public ResponseEntity<String> update(final @PathVariable(name = "id") Long jobId, final @RequestBody Job job) {
         final var isUpdated = this.jobService.update(jobId, job);
         if (isUpdated) return new ResponseEntity<>("Job successfully updated", HttpStatus.OK);

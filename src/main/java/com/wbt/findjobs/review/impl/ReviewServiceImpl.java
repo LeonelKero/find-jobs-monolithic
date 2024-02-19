@@ -7,7 +7,9 @@ import com.wbt.findjobs.review.ReviewService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -23,21 +25,26 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Optional<Review> review(final Long reviewId) {
-        return this.reviewRepository.findById(reviewId);
+    public List<Review> findAllByCompany(Long companyId) {
+        return this.reviewRepository.findByCompanyId(companyId);
     }
 
-    @Override
-    public Boolean delete(final Long reviewId) {
-        if (this.reviewRepository.existsById(reviewId)) {
-            this.reviewRepository.deleteById(reviewId);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Boolean update(final Long reviewId, final ReviewRequest request) {
-        return null;
-    }
+//    @Override
+//    public Optional<Review> review(final Long companyId, final Long reviewId) {
+//        return this.reviewRepository.findById(reviewId);
+//    }
+//
+//    @Override
+//    public Boolean delete(final Long reviewId) {
+//        if (this.reviewRepository.existsById(reviewId)) {
+//            this.reviewRepository.deleteById(reviewId);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public Boolean update(final Long reviewId, final ReviewRequest request) {
+//        return null;
+//    }
 }
