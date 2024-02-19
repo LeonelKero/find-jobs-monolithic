@@ -2,6 +2,7 @@ package com.wbt.findjobs.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wbt.findjobs.job.Job;
+import com.wbt.findjobs.review.Review;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<Job> jobs = new ArrayList<>();
 
-    // todo: add review
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 
     public Company() {
     }
@@ -34,6 +36,14 @@ public class Company {
         this.name = name;
         this.description = description;
         this.jobs = jobs;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public List<Job> getJobs() {
