@@ -6,6 +6,8 @@ public interface ReviewService {
     List<Review> findAll();
     List<Review> findAllByCompany(final Long companyId);
 
+    String create(final Long companyId, final ReviewRequest request);
+
 //    @Query("select r from Review r where r.company.id = :companyId")
 //    Optional<Review> review(final Long companyId, final Long reviewId);
 //
