@@ -8,6 +8,7 @@ import com.wbt.findjobs.review.ReviewService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -41,10 +42,14 @@ public class ReviewServiceImpl implements ReviewService {
         return null;
     }
 
-//    @Override
-//    public Optional<Review> review(final Long companyId, final Long reviewId) {
-//        return this.reviewRepository.findById(reviewId);
-//    }
+    @Override
+    public Optional<Review> review(final Long companyId, final Long reviewId) {
+        final var optionalCompany = this.companyService.findById(companyId);
+        if (optionalCompany.isPresent()) {
+            return this.reviewRepository.findByIdAndCompanyId(reviewId, companyId);
+        }
+        return Optional.empty();
+    }
 //
 //    @Override
 //    public Boolean delete(final Long reviewId) {
