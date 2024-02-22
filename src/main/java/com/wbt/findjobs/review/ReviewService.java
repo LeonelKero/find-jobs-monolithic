@@ -1,7 +1,5 @@
 package com.wbt.findjobs.review;
 
-import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +12,7 @@ public interface ReviewService {
 
     Optional<Review> review(final Long companyId, final Long reviewId);
 
-//    @Query("select r from Review r where r.company.id = :companyId")
-//    Optional<Review> review(final Long companyId, final Long reviewId);
-//
-//    Boolean delete(final Long reviewId);
-//
-//    Boolean update(final Long reviewId, final ReviewRequest request);
+    boolean delete(final Long companyId, final Long reviewId);
+
+    Boolean update(final Long companyId, final Long reviewId, final ReviewRequest request);
 }

@@ -1,5 +1,6 @@
 package com.wbt.findjobs.review;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,20 @@ public record ReviewController(ReviewService reviewService) {
         return optionalReview
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @PutMapping(path = {"/{reviewId}"})
+    public ResponseEntity<String> update(final @PathVariable(name = "companyId") Long cId, final @PathVariable(name = "reviewId") Long rId, final @RequestBody ReviewRequest reviewRequest) {
+        final var isUpdated = this.reviewService.update(cId, rId, reviewRequest);
+        if (isUpdated) return new ResponseEntity<>("Review resource updated successfully!", HttpStatus.OK);
+        return new ResponseEntity<>("Resource not found", HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping(path = {"/{reviewId}"})
+    public ResponseEntity<String> delete(final @PathVariable(name = "companyId") Long cId, final @PathVariable(name = "reviewId") Long rId) {
+        if (this.reviewService.delete(cId, rId))
+            return new ResponseEntity<>("Resource successfully removed", HttpStatus.OK);
+        return new ResponseEntity<>("Resource not found", HttpStatus.NOT_FOUND);
     }
 
 }

@@ -42,6 +42,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public Boolean exists(final Long companyId) {
+        return this.companyRepository.existsById(companyId);
+    }
+
+    @Override
     public Boolean update(final Long companyId, final CompanyRequest updateRequest) {
         final var optionalCompany = this.findById(companyId);
         if (optionalCompany.isPresent()) {

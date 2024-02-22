@@ -44,11 +44,37 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Optional<Review> review(final Long companyId, final Long reviewId) {
-        final var optionalCompany = this.companyService.findById(companyId);
-        if (optionalCompany.isPresent()) {
+        if (this.companyService.exists(companyId)) {
             return this.reviewRepository.findByIdAndCompanyId(reviewId, companyId);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean delete(final Long companyId, final Long reviewId) {
+        if (this.companyService.exists(companyId) && this.reviewRepository.existsById(reviewId)) {
+            this.reviewRepository.deleteById(reviewId);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean update(final Long companyId, final Long reviewId, final ReviewRequest request) {
+        final var optionalCompany = this.companyService.findById(companyId);
+        if (optionalCompany.isPresent()) {
+            final var optionalReview = this.review(optionalCompany.get().getId(), reviewId);
+            if (optionalReview.isPresent()) {
+                final var review = optionalReview.get();
+                review.setTitle(request.title());
+                review.setContent(request.content());
+                review.setRating(request.rating());
+                this.reviewRepository.save(review);
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 //
 //    @Override

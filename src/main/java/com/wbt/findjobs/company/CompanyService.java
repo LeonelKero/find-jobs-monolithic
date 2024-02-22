@@ -12,5 +12,7 @@ public interface CompanyService {
 
     Boolean delete(final Long companyId);
 
+    Boolean exists(final Long id);
+
     Boolean update(final Long companyId, final CompanyRequest updateRequest);
 }
