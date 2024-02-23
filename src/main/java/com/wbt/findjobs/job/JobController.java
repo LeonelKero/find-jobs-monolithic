@@ -24,7 +24,8 @@ public record JobController(JobService jobService) {
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<?> get(final @PathVariable(name = "id") Long id) {
         final var job = this.jobService.findById(id);
-        if (job == null) return new ResponseEntity<>("Job Resource not found!", HttpStatus.NOT_FOUND);
+        if (job == null)
+            return new ResponseEntity<>("Job Resource with %s not found!".formatted(id), HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(job);
     }
 
@@ -39,6 +40,6 @@ public record JobController(JobService jobService) {
     public ResponseEntity<String> update(final @PathVariable(name = "id") Long jobId, final @RequestBody Job job) {
         final var isUpdated = this.jobService.update(jobId, job);
         if (isUpdated) return new ResponseEntity<>("Job successfully updated", HttpStatus.OK);
-        return ResponseEntity.notFound().build();
+        return new ResponseEntity<>("Cannot update resource that does not exist", HttpStatus.NOT_FOUND);
     }
 }
