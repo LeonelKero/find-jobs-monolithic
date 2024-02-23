@@ -22,9 +22,9 @@ public record JobController(JobService jobService) {
     }
 
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<Job> get(final @PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> get(final @PathVariable(name = "id") Long id) {
         final var job = this.jobService.findById(id);
-        if (job == null) return ResponseEntity.notFound().build();
+        if (job == null) return new ResponseEntity<>("Job Resource not found!", HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(job);
     }
 
@@ -32,7 +32,7 @@ public record JobController(JobService jobService) {
     public ResponseEntity<String> remove(final @PathVariable(name = "id") Long id) {
         final var deleted = this.jobService.delete(id);
         if (deleted) return new ResponseEntity<>("Job deleted successfully", HttpStatus.OK);
-        return new ResponseEntity<>("Resource with iid %s is missing".formatted(id), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Resource with id %s is missing".formatted(id), HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(path = {"/{id}"})
