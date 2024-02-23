@@ -17,7 +17,7 @@ public class Company {
     private String description;
 
     // link to jobs offer by this company
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<Job> jobs = new ArrayList<>();
 

@@ -22,22 +22,21 @@ public record CompanyController(CompanyService companyService) {
     }
 
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<Company> company(final @PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> company(final @PathVariable(name = "id") Long id) {
         Optional<Company> optionalCompany = this.companyService.findById(id);
-        return optionalCompany
-                .map(company -> new ResponseEntity<>(company, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (optionalCompany.isPresent()) return new ResponseEntity<>(optionalCompany.get(), HttpStatus.OK);
+        return new ResponseEntity<>("Company resource with id %s not found".formatted(id), HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(path = {"/{id}"})
     public ResponseEntity<String> update(final @PathVariable(name = "id") Long id, final @RequestBody CompanyRequest request) {
-        if (this.companyService.update(id, request)) return ResponseEntity.ok("Resource successfully updated!");
+        if (this.companyService.update(id, request)) return ResponseEntity.ok("Company resource successfully updated!");
         return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping(path = {"/{id}"})
     public ResponseEntity<String> delete(final @PathVariable(name = "id") Long id) {
-        if (this.companyService.delete(id)) return ResponseEntity.ok("Resource successfully deleted!");
-        return ResponseEntity.badRequest().body("Resource with id %s not found".formatted(id));
+        if (this.companyService.delete(id)) return ResponseEntity.ok("Company resource successfully deleted!");
+        return ResponseEntity.badRequest().body("company resource with id %s not found".formatted(id));
     }
 }
