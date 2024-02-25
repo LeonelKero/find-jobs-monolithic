@@ -18,16 +18,15 @@ public record ReviewController(ReviewService reviewService) {
     @PostMapping
     public ResponseEntity<String> add(final @PathVariable(name = "companyId") Long id, final @RequestBody ReviewRequest review) {
         String response = this.reviewService.create(id, review);
-        if (response != null) return ResponseEntity.ok(response);
-        return ResponseEntity.badRequest().build();
+        if (response != null) return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>("Unable to add review for company %s".formatted(id), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(path = {"/{reviewId}"})
-    public ResponseEntity<Review> getReview(final @PathVariable(name = "reviewId") Long rId, final @PathVariable(name = "companyId") Long cId) {
+    public ResponseEntity<?> getReview(final @PathVariable(name = "reviewId") Long rId, final @PathVariable(name = "companyId") Long cId) {
         Optional<Review> optionalReview = this.reviewService.review(cId, rId);
-        return optionalReview
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+        if (optionalReview.isPresent()) return new ResponseEntity<>(optionalReview.get(), HttpStatus.OK);
+        return new ResponseEntity<>("Review resource with id %s not found".formatted(rId), HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(path = {"/{reviewId}"})
