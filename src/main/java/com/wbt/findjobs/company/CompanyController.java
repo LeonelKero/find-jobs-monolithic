@@ -31,12 +31,12 @@ public record CompanyController(CompanyService companyService) {
     @PutMapping(path = {"/{id}"})
     public ResponseEntity<String> update(final @PathVariable(name = "id") Long id, final @RequestBody CompanyRequest request) {
         if (this.companyService.update(id, request)) return ResponseEntity.ok("Company resource successfully updated!");
-        return ResponseEntity.badRequest().build();
+        return new ResponseEntity<>("Unable to update resource %s".formatted(id), HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping(path = {"/{id}"})
     public ResponseEntity<String> delete(final @PathVariable(name = "id") Long id) {
         if (this.companyService.delete(id)) return ResponseEntity.ok("Company resource successfully deleted!");
-        return ResponseEntity.badRequest().body("company resource with id %s not found".formatted(id));
+        return ResponseEntity.badRequest().body("company resource with id %s not found, unable to delete".formatted(id));
     }
 }
