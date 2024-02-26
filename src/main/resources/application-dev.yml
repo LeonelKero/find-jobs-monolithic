@@ -5,3 +5,14 @@ spring:
   datasource:
     url: jdbc:h2:mem:test
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - beans
+          - heath
+          - loggers
+          - shutdown
+          - threaddump
+          - info
