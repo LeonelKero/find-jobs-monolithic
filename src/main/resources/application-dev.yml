@@ -5,14 +5,21 @@ spring:
   datasource:
     url: jdbc:h2:mem:test
 
+# Actuator
 management:
+  info:
+    env:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include:
-          - beans
-          - heath
-          - loggers
-          - shutdown
-          - threaddump
-          - info
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+info:
+  app-name: "MyApp"
+  app-description: "MyDescription"
