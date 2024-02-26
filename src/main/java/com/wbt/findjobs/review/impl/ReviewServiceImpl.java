@@ -69,6 +69,7 @@ public class ReviewServiceImpl implements ReviewService {
                 review.setTitle(request.title());
                 review.setContent(request.content());
                 review.setRating(request.rating());
+                review.setCompany(optionalCompany.get());
                 this.reviewRepository.save(review);
                 return true;
             }
