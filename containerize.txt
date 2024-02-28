@@ -1,2 +1,2 @@
 COMMANDS
-mvn spring-boot:build-image -Dspring-boot.build.image.imageName=<ImageName>
+mvn spring-boot:build-image "-Dspring-boot.build.image.imageName=<ImageName>"
