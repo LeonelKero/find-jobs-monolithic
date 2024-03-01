@@ -11,6 +11,7 @@ This project demo the monolithic way of developing apps with Spring Boot.
 ## Technologies
 
 - Spring Web
+- Spring Actuator 
 - Spring JPA + H2
 
 ## Credit 
