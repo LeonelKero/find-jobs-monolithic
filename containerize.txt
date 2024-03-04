@@ -1,2 +1,5 @@
 COMMANDS
 mvn spring-boot:build-image "-Dspring-boot.build-image.imageName=<ImageName>"
+PUSH to the registry
+1 - first login
+2 - docker push greengorilla/findjobappimage:tagname
