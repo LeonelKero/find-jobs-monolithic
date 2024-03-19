@@ -2,3 +2,11 @@ spring:
   profiles:
     active:
       - dev
+  application:
+    name: JobApplication
+
+info:
+  app-name: JobApp
+  app-description: Job application build by wbt
+  app-version: 1.0.0
+

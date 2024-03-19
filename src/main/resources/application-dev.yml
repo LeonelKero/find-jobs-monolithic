@@ -19,7 +19,3 @@ management:
       show-details: always
     shutdown:
       enabled: true
-
-info:
-  app-name: "MyApp"
-  app-description: "MyDescription"
