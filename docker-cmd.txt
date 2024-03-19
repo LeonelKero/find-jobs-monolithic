@@ -1,0 +1,12 @@
+// Check connection (reachability) between two containers
+$ docker exec -it <CONTAINER_A> ping <CONTAINER_B>
+
+// Create a network before linking containers
+$ docker network create <NETWORK_NAME>
+
+// Run containers with network link
+$ docker run -d --name [CONTAINER_NAME] --network <NETWORK_NAME> -e <ENV_KEY]=[ENV_VALUE> <IMAGE_NAME>:<TAG>
+# POSTGRES
+$ docker run -d --name postgres16 --network app_net -e POSTGRES_PASSWORD=mypass postgres:16
+# PGADMIN
+$ docker run -d --name pgadmin4 --network app_net -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=pgadmin dpage/pgadmin4:8.4
