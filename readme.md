@@ -13,6 +13,7 @@ This project demo the monolithic way of developing apps with Spring Boot.
 - Spring Web
 - Spring Actuator 
 - Spring JPA + H2
+- Docker
 
 ## Credit 
 
